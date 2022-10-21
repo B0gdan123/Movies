@@ -35,12 +35,12 @@ class MoviesDetailsVideo : AppCompatActivity() {
         apiInterface.enqueue(object : Callback<MovieDetails>{
             override fun onResponse(call: Call<MovieDetails>, response: Response<MovieDetails>) {
                 title.text = response.body()?.title
-                releaseDate.text = response.body()?.release_date.toString()
-                score.text = response.body()?.vote_average.toString()
+                releaseDate.text = response.body()?.releaseDate.toString()
+                score.text = response.body()?.voteAverage.toString()
                 overview.text= response.body()?.overview
 
 
-                Picasso.get().load("https://image.tmdb.org/t/p/w500"+ response.body()?.backdrop_path).into(banner)
+                Picasso.get().load("https://image.tmdb.org/t/p/w500"+ response.body()?.backdropPath).into(banner)
             }
 
             override fun onFailure(call: Call<MovieDetails>, t: Throwable) {

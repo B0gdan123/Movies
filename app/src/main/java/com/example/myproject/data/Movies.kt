@@ -1,33 +1,33 @@
 package com.example.myproject.data
 
-import com.example.myproject.ProductionCompanyX
-import com.example.myproject.ProductionCountryX
-import com.example.myproject.SpokenLanguageX
+import com.example.myproject.ProductionCompany
+import com.example.myproject.ProductionCountries
+import com.example.myproject.SpokenLanguage
 
 data class Movies(
     val adult: Boolean,
-    val backdrop_path: String,
-    val belongs_to_collection: Any,
+    val backdropPath: String,
+    val belongsToCollection: Any,
     val budget: Int,
     val genres: List<Genre>,
     val homepage: String,
     val id: Int,
-    val imdb_id: String,
-    val original_language: String,
-    val original_title: String,
+    val imdbId: String,
+    val originalLanguage: String,
+    val originalTitle: String,
     val overview: String,
     val popularity: Double,
     val poster_path: String,
-    val production_companies: List<ProductionCompanyX>,
-    val production_countries: List<ProductionCountryX>,
-    val release_date: String,
+    val productionCompanies: List<ProductionCompany>,
+    val productionCountries: List<ProductionCountries>,
+    val releaseDate: String,
     val revenue: Int,
     val runtime: Int,
-    val spoken_languages: List<SpokenLanguageX>,
+    val spokenLanguages: List<SpokenLanguage>,
     val status: String,
     val tagline: String,
     val title: String,
     val video: Boolean,
-    val vote_average: Double,
-    val vote_count: Int
+    val voteAverage: Double,
+    val voteCount: Int
 )

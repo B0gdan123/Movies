@@ -24,24 +24,12 @@ class MoviesActivity : AppCompatActivity() {
         Log.d("devlog", "in the Movies Activity")
 
         val recyclerview = findViewById<RecyclerView>(R.id.recyclerview)
-        // this creates a vertical layout Manager
+
         recyclerview.layoutManager = GridLayoutManager(this,2)
 
-        // ArrayList of class ItemsViewModel
+
         val data = ArrayList<ItemsViewModel>()
 
-        // This loop will create 20 Views containing
-        // the image with the count of view
-//        for (i in 1..20) {
-//            data.add(
-//                ItemsViewModel(
-//                    com.firebase.ui.auth.R.drawable.common_full_open_on_phone,
-//                    "Item " + i
-//                )
-//            )
-//        }
-
-        // This will pass the ArrayList to our Adapter
 
 
         val apiInterface = ApiInterface.create().getMovie("e5f74869102e3b8ab1d63b79b819a3fe")

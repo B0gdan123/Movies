@@ -1,6 +1,6 @@
-package com.example.myproject.data
+package com.example.myproject
 
-data class ProductionCompany(
+data class ProductionOfCompany(
     val id: Int,
     val logoPath: String,
     val name: String,

@@ -30,7 +30,7 @@ class CustomAdapter(private val mList: List<Result>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val itemsModel = mList[position]
-        Picasso.get().load("https://image.tmdb.org/t/p/w500" + mList[position].poster_path).into( holder.imageView)
+        Picasso.get().load("https://image.tmdb.org/t/p/w500" + mList[position].posterPath).into( holder.imageView)
         /*
         sets the image to the imageview from our itemHolder class
         holder.imageView.setImageResource(itemsModel.title)

@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         database = Firebase.database.reference
-        //initialization database
+
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build()
         )
