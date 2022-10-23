@@ -1,7 +1,7 @@
 package com.example.myproject.model.apis
 
 import com.example.myproject.data.MovieDetails
-import com.example.myproject.TestMovie
+import com.example.myproject.data.MovieListDataClass
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,14 +13,17 @@ import retrofit2.http.Query
 interface ApiInterface {
 
     @GET("3/movie/popular")
-    fun getMovie(@Query ("api_key")sort : String): Call<TestMovie>
+    fun getMovie(@Query("api_key") sort: String): Call<MovieListDataClass>
 
     @GET("3/movie/{movie_id}")
-    fun getMovieDetails(@Path ("movie_id")movieId: Int, @Query ("api_key")sort:String): Call<MovieDetails>
+    fun getMovieDetails(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Call<MovieDetails>
 
-    companion object{
-         var BASE_URL = "https://api.themoviedb.org/"
-        fun create() : ApiInterface {
+    companion object {
+        var BASE_URL = "https://api.themoviedb.org/"
+        fun create(): ApiInterface {
 
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())

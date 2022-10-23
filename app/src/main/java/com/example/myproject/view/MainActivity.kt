@@ -1,41 +1,42 @@
 package com.example.myproject.view
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import com.example.myproject.R
 import com.example.myproject.data.User
+import com.example.myproject.viewmodel.MainActivityViewModel
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
+    private val mMainActivityViewModel: MainActivityViewModel = MainActivityViewModel()
     private val signInLauncher = registerForActivityResult(
         FirebaseAuthUIActivityResultContract()
     ) { res ->
         this.onSignInResult(res)
     }
 
-    private lateinit var database: DatabaseReference
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        openRegistrationScreen()
 
-        database = Firebase.database.reference
-        //initialization database
+    }
+
+    private fun openRegistrationScreen() {
+        val intentToAnotherScreen = Intent(this, MoviesActivity::class.java)
+        startActivity(intentToAnotherScreen)
+
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build()
         )
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
-            .setIsSmartLockEnabled(false)
             .setAvailableProviders(providers)
             .build()
         signInLauncher.launch(signInIntent)
@@ -43,23 +44,25 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
-        val response = result.idpResponse //result from display of Firebase auth
-        if (result.resultCode == RESULT_OK) {
-            Log.d("devlog", "Success Registration")
-            // Successfully signed in
-            val authUser = FirebaseAuth.getInstance().currentUser
-            authUser?.let {
-                val email = it.email.toString()
-                val uid = it.uid
-                val firebaseUser = User(email, uid)
-                database.child("users").child(uid).setValue(firebaseUser)
-                val intent = Intent(this@MainActivity, MoviesActivity::class.java)
-                startActivity(intent)
+        when (result.resultCode) {
+            RESULT_OK -> {
+                val authUser = FirebaseAuth.getInstance().currentUser
+                authUser.let {
+                    val email = it.email.toString()
+                    val uid = it.uid
+                    val firebaseUser = User(email, uid)
+                    mMainActivityViewModel.updateUserData(firebaseUser, uid)
+                    val intentToAnotherScreen = Intent(this, MoviesActivity::class.java)
+                    startActivity(intentToAnotherScreen)
+                }
             }
-            Toast.makeText(this,"Success",Toast.LENGTH_SHORT).show()
-
-        } else {
-
+            RESULT_CANCELED -> {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Something wrong with registration",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 }
