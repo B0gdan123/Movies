@@ -1,6 +1,6 @@
 package com.example.myproject.data
 
-data class Result(
+data class DataMovie(
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<Int>,
